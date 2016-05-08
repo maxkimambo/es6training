@@ -4,63 +4,90 @@ var expect = chai.expect;
 
 describe('Iterables', function(){
 
-  // different ways we can interate through an array to get a sum
+// different ways we can interate through an array to get a sum
 
-  let sum = 0;
-  let numbers = [1,2,3,4];
+let sum = 0;
+let numbers = [1,2,3,4];
 
-  // iterator
-  it('for loops', function(){
+// iterator
+it('for loops', function(){
 
-    // reset sum
+  // reset sum
+  sum =0;
+
+  for(let i=0; i< numbers.length; i++){
+    sum += numbers[i];
+  }
+  expect(sum).to.equal(10);
+});
+
+it('for in ', function(){
     sum =0;
 
-    for(let i=0; i< numbers.length; i++){
-      sum += numbers[i];
-    }
+      for(let i in numbers){
+        sum += numbers[i];
+      }
+
     expect(sum).to.equal(10);
-  });
+});
 
-  it('for in ', function(){
-      sum =0;
+it('iterator', function(){
 
-        for(let i in numbers){
-          sum += numbers[i];
+    // sum =0;
+    //   // first get the iterator;
+    // console.log(numbers);
+    //
+    //   let iterator = numbers.values();
+    //   let next = iterator.next();
+    //
+    //   while(!next.done){
+    //     sum += next.value;
+    //     next = iterator.next();
+    //   }
+    //
+    // expect(sum).to.equal(10);
+});
+
+it('for of for iteration', function(){
+  // this loops over values and not keys like the for in loop.
+    sum =0;
+
+      for(let i of numbers){
+        sum += i;
+      }
+
+    expect(sum).to.equal(10);
+});
+
+it('building your own iterators', function(){
+   let company = {
+     employees: [],
+     addEmployee: function(...names){
+      names.forEach((n) =>  this.employees.push(n));
+    },
+    [Symbol.iterator](){
+      let index =0;
+      return {
+        next: ()=>{
+          let value = this[index];
+          let done = index >= this.employees.length;
+          index++;
+          return {value, done}
         }
+      }
+    }
+  }
 
-      expect(sum).to.equal(10);
-  });
+   company.addEmployee('Max', 'Bill', 'Robin');
 
-  it('iterator', function(){
+   let count = 0;
 
-      // sum =0;
-      //   // first get the iterator;
-      // console.log(numbers);
-      //
-      //   let iterator = numbers.values();
-      //   let next = iterator.next();
-      //
-      //   while(!next.done){
-      //     sum += next.value;
-      //     next = iterator.next();
-      //   }
-      //
-      // expect(sum).to.equal(10);
-  });
+   for(let employee of company){
+     count +=1;
+   }
 
-  it('for of for iteration', function(){
-    // this loops over values and not keys like the for in loop.
-      sum =0;
+   expect(count).to.equal(3);
 
-        for(let i of numbers){
-          sum += i;
-        }
-
-      expect(sum).to.equal(10);
-  });
-
-  it('building your own iterators', function(){
-    
-  })
+});
 
 });
