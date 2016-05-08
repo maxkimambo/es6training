@@ -21,4 +21,21 @@ describe('Arrow functions', function(){
    // doubling teh items in an array
    expect(numbers.map(n => n*2)).to.eql([2,4,6,8]);
   });
+
+  it('lexically binds to this', function(done){
+
+    this.name = "Max";
+
+    // assuming some async function
+
+    setTimeout(()=> {
+        // the arrow function takes care that this still points to the
+        // correct scope
+
+          expect(this.name).to.equal('Max');
+          done();
+    },15);
+
+  });
+
 });
