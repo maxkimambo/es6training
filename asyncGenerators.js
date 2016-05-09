@@ -78,6 +78,8 @@ describe('Async Generators', function(){
     //
     // gen.next();
 
+    // use them together with promises to make async code easier to read.
+    // http://alexperry.io/javascript/2015/09/17/es6-generators-and-asynchronous-javascript.html
 
 
 
