@@ -95,9 +95,6 @@ describe('Promises', function(){
           expect(customer.firstName).to.equal('Max');
             done();
       });
-
    });
-
  });
-
 });
